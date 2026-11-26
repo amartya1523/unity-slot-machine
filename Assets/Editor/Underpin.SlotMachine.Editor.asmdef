@@ -1,0 +1,19 @@
+{
+    "name": "Underpin.SlotMachine.Editor",
+    "rootNamespace": "Underpin.SlotMachine.EditorTools",
+    "references": [
+        "Underpin.SlotMachine",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
