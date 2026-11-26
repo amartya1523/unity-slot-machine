@@ -14,7 +14,32 @@
 
 ---
 
-<!-- DEMO_SECTION -->
+<p align="center">
+  <a href="https://amartya1523.github.io/unity-slot-machine/"><b>▶️ Play it in your browser</b></a> ·
+  <a href="Docs/gameplay.mp4"><b>🎬 Watch the full gameplay video (95 s)</b></a> ·
+  <a href="Build/WebGL"><b>📁 WebGL build</b></a>
+</p>
+
+<p align="center"><img src="Docs/jackpot.jpg" alt="Three Sevens landing on the payline" width="820"></p>
+
+## 📺 Demo
+
+<p align="center"><img src="Docs/preview.gif" alt="Jackpot spin" width="720"></p>
+
+The [gameplay video](Docs/gameplay.mp4) is a real recording of the WebGL build and walks through:
+
+| Time | What you see |
+|---|---|
+| 0:00 | Paytable popup |
+| 0:07 | Normal spins with the SPIN button, the lever and the Space key |
+| 0:23 | Bet changed to 50 and back to 10 |
+| 0:30 | QA tool forces 3 Bells: **5 free spins** play automatically with the bet locked |
+| 1:10 | QA tool forces 3 Sevens: **JACKPOT** (500 line win + the 255 progressive pot) |
+| 1:25 | QA tool forces 3 BARs: **BIG WIN** |
+
+Everything else in the video (all the normal spins) is the live crypto RNG.
+
+---
 
 ## 🎮 Game overview
 
@@ -47,7 +72,7 @@ Pull the lever (or press **SPIN** / **Space**). Three reels spin and stop one af
 
 ## ⭐ Bonus features
 
-1. **Progressive jackpot**: 5% of every paid bet goes into a pot shown on screen. Three Sevens pay 50× **plus the whole pot**, which then resets to 1,000.
+1. **Progressive jackpot**: 5% of every paid bet goes into a pot shown on screen. Three Sevens pay 50× **plus the whole pot**, which then resets to 250.
 2. **Free spins**: three Bells award 5 free spins. They play automatically at the bet that triggered them (the bet is locked), and landing Bells again adds 5 more.
 3. **Near-miss anticipation**: when the first two reels already match, the last reel keeps spinning a little longer ("So close...!"), like classic machines.
 4. **QA tool**: the small **QA** button (bottom-left) forces the *next* spin to land three of a chosen symbol, so the jackpot and free spins can be checked without hundreds of spins. Normal spins are never affected.
@@ -70,10 +95,17 @@ The RNG is `System.Security.Cryptography.RandomNumberGenerator` (unpredictable, 
 |---|---|
 | Base game return | 0.1%·50 + 0.8%·25 + 2.7%·10 + 6.4%·4 = **77.6%** |
 | Free spins (bell triggers) | ≈ **12.1%** |
-| Jackpot contributions paid back | ≈ **5%** |
-| **Target RTP** | **≈ 94.7%**, hit rate 1 in 10 spins |
+| Progressive jackpot (contributions + seed) | ≈ **7.5%** |
+| **Measured RTP (1,000,000 spins)** | **97.4%**, hit rate exactly 1 in 10 spins |
 
-`Underpin > Simulate RTP (1M spins)` plays a million spins through the real `GameSession` to confirm it.
+`Underpin > Simulate RTP (1M spins)` plays a million spins through the real `GameSession`. It actually caught a balancing mistake: with the jackpot first seeded at 1,000 credits (100× a 10-credit bet) the machine returned 105.8%, so it would lose money. Lowering the seed to 250 brought it to 97.4%, which is in the normal range for slots.
+
+```
+[RTP] 1,000,000 spins at bet 10
+  RTP: 97.41%
+  Hit rate: 1 in 10.0 spins
+  Jackpots: 965, free-spin triggers: 27,162
+```
 
 **4. Reel animation that feels physical.**
 A reel is one float (`position`, in symbols) and 5 recycled `Image` cells inside a `RectMask2D`, so it's endless with no allocations. A spin runs in phases:
@@ -148,7 +180,7 @@ cd unity-slot-machine/Build/WebGL
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>.
+Then open <http://localhost:8000>, or just use the [hosted version](https://amartya1523.github.io/unity-slot-machine/).
 
 ### Open the project
 
@@ -166,7 +198,7 @@ Unity -batchmode -quit -projectPath . -executeMethod Underpin.SlotMachine.Editor
 
 ### Run the tests
 
-`Window > General > Test Runner > EditMode > Run All` (payouts, free spins, jackpot, bet locking, RNG bounds and uniformity, reel strip weights).
+`Window > General > Test Runner > EditMode > Run All`: **17/17 passing** (payouts, free spins, jackpot, bet locking, RNG bounds and uniformity, reel strip weights).
 
 ---
 
@@ -177,6 +209,7 @@ Work happened on feature branches merged into `main` with merge commits, so the 
 - `feature/core-logic`: data, RNG, payout rules, session, tests
 - `feature/reels-and-ui`: reel animation, machine, UI, scene builder
 - `feature/webgl-build`: build tooling, RTP simulator, WebGL build
+- `gh-pages`: the WebGL build, served by GitHub Pages for the browser link
 
 ---
 
