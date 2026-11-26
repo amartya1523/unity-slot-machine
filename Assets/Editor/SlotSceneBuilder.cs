@@ -68,7 +68,7 @@ namespace Underpin.SlotMachine.EditorTools
             var symbols = new List<SymbolDefinition> { seven, bar, bell, cherry };
 
             var paytable = LoadOrCreate<PaytableDefinition>($"{DataDir}/Paytable.asset");
-            paytable.Configure(symbols, new[] { 10, 50, 100 }, 1000, 1000, 0.05f, 20);
+            paytable.Configure(symbols, new[] { 10, 50, 100 }, 1000, 250, 0.05f, 20);
             EditorUtility.SetDirty(paytable);
 
             var reelProfile = LoadOrCreate<ReelAnimationProfile>($"{AnimDir}/ReelAnimationProfile.asset");

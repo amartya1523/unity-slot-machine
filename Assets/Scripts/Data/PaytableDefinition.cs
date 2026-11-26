@@ -22,7 +22,7 @@ namespace Underpin.SlotMachine.Data
         private int startingCredits = 1000;
 
         [SerializeField, Min(0), Tooltip("Value the jackpot pot starts at (and resets to after it is won).")]
-        private int jackpotSeed = 1000;
+        private int jackpotSeed = 250;
 
         [SerializeField, Range(0f, 0.25f), Tooltip("Share of every paid bet that goes into the jackpot pot.")]
         private float jackpotContribution = 0.05f;
