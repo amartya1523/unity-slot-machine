@@ -40,6 +40,7 @@ namespace Underpin.SlotMachine.EditorTools
             // No compression: the build then runs from any static host (GitHub Pages included)
             // without special Content-Encoding headers.
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
+            PlayerSettings.WebGL.template = "PROJECT:Responsive"; // Assets/WebGLTemplates/Responsive
             PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport.ExplicitlyThrownExceptionsOnly;
 
             var options = new BuildPlayerOptions
